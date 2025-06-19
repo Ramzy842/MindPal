@@ -1,0 +1,26 @@
+DROP TABLE IF EXISTS challenge_history;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS vocab;
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  score INTEGER DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE challenge_history (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    challenge TEXT NOT NULL,
+    score INTEGER NOT NULL,
+    duration_seconds FLOAT,
+    played_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE vocab (
+    id SERIAL PRIMARY KEY,
+    word TEXT UNIQUE NOT NULL,
+    synonyms TEXT[] NOT NULL
+)
